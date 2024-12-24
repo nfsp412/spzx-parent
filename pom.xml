@@ -34,6 +34,10 @@
         <spring.cloud.alibaba.version>2022.0.0.0-RC2</spring.cloud.alibaba.version>
         <easycaptcha.version>1.6.2</easycaptcha.version>
         <jwt.version>0.11.2</jwt.version>
+        <hutool.version>5.5.2</hutool.version>
+        <minio.version>8.5.2</minio.version>
+        <easy-excel.version>3.1.0</easy-excel.version>
+        <page-helper.version>1.4.3</page-helper.version>
 
     </properties>
 
@@ -71,13 +75,13 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.5.2</version>
+                <version>${hutool.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
-                <version>8.5.2</version>
+                <version>${minio.version}</version>
             </dependency>
 
             <dependency>
@@ -89,13 +93,13 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
-                <version>3.1.0</version>
+                <version>${easy-excel.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>1.4.3</version>
+                <version>${page-helper.version}</version>
             </dependency>
 
             <!--mybatis-plus-->
@@ -106,7 +110,7 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-            <!--springcloud alibaba 2022.0.0.0-RC2-->
+            <!--spring cloud alibaba 2022.0.0.0-RC2-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>

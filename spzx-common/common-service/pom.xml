@@ -19,13 +19,6 @@
 
     <dependencies>
 
-        <!-- common-util模块 -->
-        <dependency>
-            <groupId>com.atguigu</groupId>
-            <artifactId>common-util</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <!-- spzx-model模块 -->
         <dependency>
             <groupId>com.atguigu</groupId>
