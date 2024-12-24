@@ -4,7 +4,6 @@ import com.atguigu.spzx.common.result.Result;
 import com.atguigu.spzx.manager.service.SysRoleUserService;
 import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
-import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,10 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.simpleframework.xml.Path;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RequestMapping("/admin/system/sysUser")
 @RestController

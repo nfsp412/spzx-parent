@@ -11,14 +11,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import lombok.Getter;
-import org.checkerframework.framework.qual.TargetLocations;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin/system/sysRole")
@@ -33,7 +28,7 @@ public class SysRoleController {
                                              @PathVariable("size") Integer size,
                                              @RequestBody SysRoleDto sysRoleDto) {
         System.out.println(sysRoleDto);
-        LoginUser user = LoginUserHolder.getLoginUser();
+
         Page<SysRole> page = new Page<>(current, size);
         IPage<SysRole> sysRoleIPage = sysRoleService.getSysRolePage(page,sysRoleDto);
         return Result.ok(sysRoleIPage);

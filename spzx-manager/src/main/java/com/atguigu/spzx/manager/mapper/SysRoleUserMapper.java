@@ -1,7 +1,5 @@
 package com.atguigu.spzx.manager.mapper;
 
-import com.atguigu.spzx.model.dto.system.AssginRoleDto;
-import com.atguigu.spzx.model.entity.system.SysRole;
 import com.atguigu.spzx.model.entity.system.SysRoleUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

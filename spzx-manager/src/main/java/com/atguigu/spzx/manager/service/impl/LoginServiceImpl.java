@@ -6,7 +6,6 @@ import com.atguigu.spzx.common.result.ResultCodeEnum;
 import com.atguigu.spzx.common.utils.JwtUtil;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
 import com.atguigu.spzx.manager.service.LoginService;
-import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.LoginDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.enums.BaseStatus;

@@ -22,8 +22,8 @@ public class FileUploadController {
      * 否则就获取不到这个上传的文件对象了
      * 所以要么是@RequestParam标注value为file
      * 要么形参写file
-     * @param multipartFile
-     * @return
+     * @param multipartFile 默认是file这个名字
+     * @return 返回图片的minio的url
      */
     @PostMapping("/fileUpload")
     @Operation(summary = "上传文件接口")

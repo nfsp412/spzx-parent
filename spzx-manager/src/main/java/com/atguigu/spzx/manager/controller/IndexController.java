@@ -2,19 +2,16 @@ package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.common.login.LoginUser;
 import com.atguigu.spzx.common.login.LoginUserHolder;
-import com.atguigu.spzx.common.utils.JwtUtil;
 import com.atguigu.spzx.manager.service.LoginService;
 import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.LoginDto;
-import com.atguigu.spzx.model.entity.system.SysMenu;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.common.result.Result;
 import com.atguigu.spzx.model.vo.h5.UserInfoVo;
 import com.atguigu.spzx.model.vo.system.LoginVo;
 import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import com.atguigu.spzx.model.vo.system.ValidateCodeVo;
-import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -60,7 +57,7 @@ public class IndexController {
 
     @GetMapping("/getUserInfo")
     @Operation(summary = "获取用户信息接口")
-    public Result<UserInfoVo> getUserInfo(@RequestHeader("token") String token) {
+    public Result<UserInfoVo> getUserInfo() {
 
         LoginUser user = LoginUserHolder.getLoginUser();
         UserInfoVo userInfoVo = sysUserService.getUserInfoVo(user);

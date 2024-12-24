@@ -9,8 +9,8 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 public class JwtUtil {
-    private static long tokenExpiration = 60 * 60 * 1000L * 24;
-    private static SecretKey tokenSignKey = Keys.hmacShaKeyFor("M0PKKI6pYGVWWfDZw90a0lTpGYX1d4AQ".getBytes());
+    private static final long tokenExpiration = 60 * 60 * 1000L * 24;
+    private static final SecretKey tokenSignKey = Keys.hmacShaKeyFor("M0PKKI6pYGVWWfDZw90a0lTpGYX1d4AQ".getBytes());
 
     public static String createToken(Long userId, String username) {
         return Jwts.builder().
