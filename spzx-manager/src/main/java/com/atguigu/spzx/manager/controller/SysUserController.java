@@ -3,7 +3,7 @@ package com.atguigu.spzx.manager.controller;
 import com.atguigu.spzx.common.result.Result;
 import com.atguigu.spzx.manager.service.SysRoleUserService;
 import com.atguigu.spzx.manager.service.SysUserService;
-import com.atguigu.spzx.model.dto.system.AssginRoleDto;
+import com.atguigu.spzx.model.dto.system.AssignRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -58,8 +58,8 @@ public class SysUserController {
 
     @PostMapping("/doAssign")
     @Operation(summary = "用户分配角色接口")
-    public Result doAssign(@RequestBody AssginRoleDto assginRoleDto) {
-        sysRoleUserService.doAssign(assginRoleDto);
+    public Result doAssign(@RequestBody AssignRoleDto assignRoleDto) {
+        sysRoleUserService.doAssign(assignRoleDto);
         return Result.ok(null);
     }
 }
