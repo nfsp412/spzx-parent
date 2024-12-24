@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysUserMapper">
+
+    <!--    SysUser test(String username);-->
+    <select id="test" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select *
+        from db_spzx.sys_user
+        where username = #{username}
+    </select>
+
+<!--    IPage<SysUser> findByPage(Page<SysUser> page, SysUserDto sysUserDto);-->
+
+    <select id="findByPage" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select
+            id,
+            username,
+            name,
+            phone,
+            avatar,
+            description,
+            status,
+            create_time
+        from db_spzx.sys_user
+        <where>
+            is_deleted = 0
+            <if test="sysUserDto.keyword != '' and sysUserDto.keyword != null ">
+                and username like concat('%', #{sysUserDto.keyword}, '%')
+            </if>
+            <if test="sysUserDto.createTimeBegin != '' and sysUserDto.createTimeBegin != null ">
+                and create_time &gt;= #{sysUserDto.createTimeBegin}
+            </if>
+            <if test="sysUserDto.createTimeEnd != '' and sysUserDto.createTimeEnd != null ">
+                and create_time &lt;= #{sysUserDto.createTimeEnd}
+            </if>
+        </where>
+    </select>
+</mapper>
