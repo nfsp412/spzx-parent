@@ -2,9 +2,7 @@ package com.atguigu.spzx.manager.mapper;
 
 import com.atguigu.spzx.model.entity.SysMenu;
 import com.atguigu.spzx.model.entity.SysMenu1;
-import com.atguigu.spzx.model.vo.DynamicMenusVo;
 import com.atguigu.spzx.model.vo.SysMenuVo;
-import com.atguigu.spzx.model.vo.SysMenuVo1;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
@@ -17,14 +15,16 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    //    List<SysMenuVo> findNodes();
-    List<SysMenuVo1> findNodes();
+
+    List<SysMenuVo> findNodes();
 
     List<Long> findRoleMenuIds(Long roleId);
 
-    List<DynamicMenusVo> findDynamicMenus(Long userId);
 
-    List<SysMenu1> selectListByUserId(Long userId);
+
+    List<SysMenu> selectListByUserId(Long userId);
+
+    List<SysMenuVo> menus(Long userId);
 }
 
 

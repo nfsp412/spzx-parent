@@ -2,14 +2,9 @@ package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.common.result.Result;
 import com.atguigu.spzx.manager.service.SysMenuService;
-import com.atguigu.spzx.model.dto.AssignMenuDto;
 
 import com.atguigu.spzx.model.entity.SysMenu;
 import com.atguigu.spzx.model.vo.SysMenuVo;
-import com.atguigu.spzx.model.vo.SysMenuVo1;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +18,8 @@ public class SysMenuController {
     private SysMenuService sysMenuService;
 
     @GetMapping("/findNodes")
-    public Result<List<SysMenuVo1>> findNodes() {
-        List<SysMenuVo1> sysMenuVoList = sysMenuService.findNodes();
+    public Result<List<SysMenuVo>> findNodes() {
+        List<SysMenuVo> sysMenuVoList = sysMenuService.findNodes();
         return Result.ok(sysMenuVoList);
     }
 

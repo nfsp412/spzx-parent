@@ -8,36 +8,13 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="sortValue" column="sort_value" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
-
-    <resultMap id="BaseResultMap1" type="com.atguigu.spzx.model.entity.SysMenu">
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-        <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="component" column="component" jdbcType="VARCHAR"/>
-        <result property="sortValue" column="sort_value" jdbcType="INTEGER"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
-    </resultMap>
-
-    <resultMap id="BaseResultMap2" type="com.atguigu.spzx.model.vo.SysMenuVo1">
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-        <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="component" column="component" jdbcType="VARCHAR"/>
-        <result property="sortValue" column="sort_value" jdbcType="INTEGER"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
-    </resultMap>
-
-    <resultMap id="sysMenuMap" type="com.atguigu.spzx.model.entity.SysMenu1" autoMapping="true"/>
 
     <sql id="Base_Column_List">
         id,parent_id,title,
@@ -45,23 +22,10 @@
         create_time,update_time,is_deleted
     </sql>
 
-    <sql id="Base_Column_List1">
-        id,parent_id,title,
-        component,sort_value,status
-    </sql>
-
     <!--    List<SysMenuVo> findNodes();-->
-    <!--    <select id="findNodes" resultMap="BaseResultMap">-->
-    <!--        select <include refid="Base_Column_List"/>-->
-    <!--        from db_spzx.sys_menu-->
-    <!--        where is_deleted = 0-->
-    <!--        order by sort_value-->
-    <!--    </select>-->
-
-    <!--    List<SysMenuVo1> findNodes();-->
-    <select id="findNodes" resultMap="BaseResultMap2">
+    <select id="findNodes" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List1"/>
+        <include refid="Base_Column_List"/>
         from db_spzx.sys_menu
         where is_deleted = 0
         order by sort_value
@@ -76,9 +40,10 @@
           and role_id = #{roleId}
     </select>
 
-<!--    sql排序顺序直接影响到后面构建tree-->
-    <!--    List<DynamicMenusVo> findDynamicMenus(Long userId);-->
-    <select id="findDynamicMenus" resultType="com.atguigu.spzx.model.vo.DynamicMenusVo">
+    <!--    sql排序顺序直接影响到后面构建tree-->
+<!--    List<SysMenuVo> menus(Long userId);-->
+
+    <select id="menus" resultMap="BaseResultMap">
         select distinct t1.id,
                         t1.parent_id,
                         t1.title,
@@ -96,8 +61,8 @@
         order by t1.parent_id, t1.id
     </select>
 
-    <!--    List<SysMenu> selectListByUserId(Long userId);-->
-    <select id="selectListByUserId" resultMap="sysMenuMap">
+<!--    List<SysMenu> selectListByUserId(Long userId);-->
+    <select id="selectListByUserId" resultType="com.atguigu.spzx.model.entity.SysMenu">
         SELECT DISTINCT m.*
         FROM db_spzx.sys_menu m
                  INNER JOIN db_spzx.sys_role_menu rm ON rm.menu_id = m.id

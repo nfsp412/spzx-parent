@@ -1,4 +1,4 @@
-package com.atguigu.spzx.service;
+package com.atguigu.spzx.common.service;
 
 
 import com.atguigu.spzx.model.entity.SysOperLog;
