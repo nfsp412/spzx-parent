@@ -1,65 +1,69 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.common.anno.Log;
 import com.atguigu.spzx.common.result.Result;
-import com.atguigu.spzx.manager.service.SysRoleUserService;
+
 import com.atguigu.spzx.manager.service.SysUserService;
-import com.atguigu.spzx.model.dto.system.AssignRoleDto;
-import com.atguigu.spzx.model.dto.system.SysUserDto;
-import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.dto.AssignRoleDto;
+import com.atguigu.spzx.model.dto.SysUserDto;
+
+import com.atguigu.spzx.model.entity.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.simpleframework.xml.Path;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RequestMapping("/admin/system/sysUser")
 @RestController
-@Tag(name = "用户相关接口")
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
 
-    @Resource
-    private SysRoleUserService sysRoleUserService;
-
+    @Log(title = "用户管理分页查询",businessType = 0)
     @GetMapping("/findByPage/{current}/{size}")
-    @Operation(summary = "分页查询用户信息接口")
-    public Result<IPage<SysUser>> findByPage(@PathVariable("current") Integer current,
-                                             @PathVariable("size") Integer size,
-                                             SysUserDto sysUserDto) {
-        Page<SysUser> page = new Page<>(current,size);
-        IPage<SysUser> sysUserList = sysUserService.findByPage(page,sysUserDto);
-        return Result.ok(sysUserList);
+    public Result<Page<SysUser>> findByPage(
+            @PathVariable("current") Integer current,
+            @PathVariable("size") Integer size,
+            SysUserDto sysUserDto
+    ) {
+//        System.out.println(1/0);
+        Page<SysUser> page = new Page<>(current, size);
+        Page<SysUser> sysUserPage = sysUserService.findByPage(page, sysUserDto);
+        return Result.ok(sysUserPage);
     }
 
-    @DeleteMapping("/deleteById/{userId}")
-    @Operation(summary = "删除用户信息接口")
-    public Result deleteSysUser(@PathVariable("userId") Integer id){
-        sysUserService.removeById(id);
+//    @PostMapping("/saveSysUser")
+//    public Result saveSysUser(@RequestBody SysUser sysUser) {
+//
+//        sysUserService.saveSysUser(sysUser);
+//        return Result.ok(null);
+//    }
+
+    @PostMapping("/saveOrUpdateSysUser")
+    public Result saveOrUpdateSysUser(@RequestBody SysUser sysUser) {
+
+        sysUserService.saveOrUpdateSysUser(sysUser);
         return Result.ok(null);
     }
 
-    @PostMapping("/saveSysUser")
-    @Operation(summary = "添加用户信息接口")
-    public Result saveSysUser(@RequestBody SysUser sysUser) {
-        System.out.println(sysUser);
-        sysUserService.saveSysUser(sysUser);
-        return Result.ok(null);
-    }
+    @DeleteMapping("/deleteSysUserById/{id}")
+    public Result deleteSysUserById(@PathVariable("id") Integer id) {
 
-    @PutMapping("/updateSysUser")
-    @Operation(summary = "修改用户信息接口")
-    public Result updateSysUser(@RequestBody SysUser sysUser) {
-        sysUserService.updateById(sysUser);
+        sysUserService.deleteSysUserById(id);
         return Result.ok(null);
     }
 
     @PostMapping("/doAssign")
-    @Operation(summary = "用户分配角色接口")
-    public Result doAssign(@RequestBody AssignRoleDto assignRoleDto) {
-        sysRoleUserService.doAssign(assignRoleDto);
+    public Result doAssign(@RequestBody AssignRoleDto assignRoleDto ) {
+
+
+        sysUserService.doAssign(assignRoleDto);
         return Result.ok(null);
     }
 }

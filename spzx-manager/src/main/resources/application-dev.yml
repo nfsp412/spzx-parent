@@ -48,4 +48,4 @@ minio:
   endpoint: http://192.168.10.100:9000
   access-key: minioadmin
   secret-key: minioadmin
-  bucket-name: manager1
+  bucket-name: spzx-manager

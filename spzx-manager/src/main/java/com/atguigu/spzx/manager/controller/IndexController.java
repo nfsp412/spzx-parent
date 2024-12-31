@@ -1,79 +1,101 @@
 package com.atguigu.spzx.manager.controller;
 
+import cn.hutool.log.Log;
 import com.atguigu.spzx.common.login.LoginUser;
 import com.atguigu.spzx.common.login.LoginUserHolder;
+
+import com.atguigu.spzx.common.result.ResultCodeEnum;
 import com.atguigu.spzx.manager.service.LoginService;
 import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.manager.service.SysUserService;
-import com.atguigu.spzx.model.dto.system.LoginDto;
-import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.dto.LoginDto;
+
 import com.atguigu.spzx.common.result.Result;
-import com.atguigu.spzx.model.vo.h5.UserInfoVo;
-import com.atguigu.spzx.model.vo.system.LoginVo;
-import com.atguigu.spzx.model.vo.system.SysMenuVo;
-import com.atguigu.spzx.model.vo.system.ValidateCodeVo;
+import com.atguigu.spzx.model.entity.SysMenu;
+import com.atguigu.spzx.model.entity.SysUser;
+import com.atguigu.spzx.model.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController()
 @RequestMapping("/admin/system/index")
-@Tag(name = "主页相关接口")
-//@CrossOrigin(allowCredentials = "true",originPatterns = "*",allowedHeaders = "*")
+@Tag(name = "动态菜单")
 public class IndexController {
+    @Resource
+    private SysUserService sysUserService;
 
     @Resource
     private LoginService loginService;
 
     @Resource
-    private SysUserService sysUserService;
-
-    @Resource
     private SysMenuService sysMenuService;
 
-    @PostMapping(value = "/login")
-    @Operation(summary = "登录接口")
+    @PostMapping("/login")
     public Result<LoginVo> login(@RequestBody LoginDto loginDto) {
-        LoginVo loginVo = loginService.login(loginDto);
+        LoginVo loginVo = sysUserService.login(loginDto);
         return Result.ok(loginVo);
     }
 
-    @GetMapping("/test")
-    @Operation(summary = "测试接口")
-    public Result<SysUser> test(@RequestParam("username") String username) {
-        SysUser sysUser = sysUserService.test(username);
-        return Result.ok(sysUser);
-    }
-
     @GetMapping("/generateValidateCode")
-    @Operation(summary = "获取验证码接口")
     public Result<ValidateCodeVo> generateValidateCode() {
         ValidateCodeVo validateCodeVo = loginService.generateValidateCode();
         return Result.ok(validateCodeVo);
     }
 
     @GetMapping("/getUserInfo")
-    @Operation(summary = "获取用户信息接口")
-    public Result<UserInfoVo> getUserInfo() {
-
+    public Result<SysUser> getUserInfo() {
         LoginUser user = LoginUserHolder.getLoginUser();
-        UserInfoVo userInfoVo = sysUserService.getUserInfoVo(user);
-        return Result.ok(userInfoVo);
-    }
-
-    @GetMapping("/menus")
-    @Operation(summary = "获取主页面信息接口")
-    public Result<List<SysMenuVo>> getMenus() {
-        List<SysMenuVo> sysMenuVoList = sysMenuService.getSysMenuVo();
-        return Result.ok(sysMenuVoList);
+        SysUser sysUser = sysUserService.getUserInfo(user);
+        return Result.ok(sysUser);
     }
 
     @GetMapping("/logout")
-    @Operation(summary = "退出登录接口")
     public Result logout() {
         return Result.ok(null);
     }
+
+    @GetMapping("/menus")
+    @Operation(summary = "menus")
+    public Result<List<DynamicMenusVo>> menus() {
+        List<DynamicMenusVo> list = sysMenuService.findDynamicMenus();
+
+//        DynamicMenusVo s1 = new DynamicMenusVo();
+//        s1.setName("system");
+//        s1.setTitle("系统管理");
+//        s1.setChildren(null);
+//
+//        DynamicMenusVo s2 = new DynamicMenusVo();
+//        s2.setName("base");
+//        s2.setTitle("基础数据管理");
+//
+//        ArrayList<DynamicMenusVo> temp = new ArrayList<>();
+//        DynamicMenusVo ss2 = new DynamicMenusVo();
+//        ss2.setTitle("地区管理");
+//        ss2.setName("region");
+//        temp.add(ss2);
+//        s2.setChildren(temp);
+//
+//        ArrayList<DynamicMenusVo> list = new ArrayList<>();
+//        list.add(s1);
+//        list.add(s2);
+
+//        System.out.println(list);
+
+        return Result.ok(list);
+    }
+
+    // com.atguigu.spzx.system.controller#IndexController
+//    @GetMapping("/menus")
+//    @Operation(summary = "menus")
+//    public Result menus() {
+//        List<SysMenuVo2> sysMenuVoList =  sysMenuService.findUserMenuList() ;
+//        System.out.println(sysMenuVoList);
+//        return Result.build(sysMenuVoList , ResultCodeEnum.SUCCESS) ;
+//    }
 }

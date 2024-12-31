@@ -15,7 +15,6 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class FileUploadServiceImpl implements FileUploadService {
-
     @Resource
     private MinioClient minioClient;
 
@@ -23,7 +22,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     private MinioProperties minioProperties;
 
     @Override
-    public String fileUpload(MultipartFile multipartFile) {
+    public String fileUpload(MultipartFile file) {
         String objectUrl;
         try {
             //判断桶是否存在
@@ -49,14 +48,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             }
             //上传文件
-            String filename = this.getDistinctFileName(multipartFile);
+            String filename = this.getDistinctFileName(file);
             minioClient.putObject(
                     PutObjectArgs
                             .builder()
                             .bucket(minioProperties.getBucketName())
                             .object(filename)
-                            .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                            .contentType(multipartFile.getContentType())
+                            .stream(file.getInputStream(), file.getSize(), -1)
+                            .contentType(file.getContentType())
                             .build());
             //返回url
             objectUrl = this.getObjectUrl(filename);
@@ -64,6 +63,14 @@ public class FileUploadServiceImpl implements FileUploadService {
             throw new RuntimeException(e);
         }
         return objectUrl;
+    }
+
+    private String getDistinctFileName(MultipartFile file) {
+        return new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
+    }
+
+    private String getObjectUrl(String filename) {
+        return minioProperties.getEndpoint() + "/" + minioProperties.getBucketName() + "/" + filename;
     }
 
     private String createBucketPolicyConfig(String bucketName) {
@@ -79,13 +86,5 @@ public class FileUploadServiceImpl implements FileUploadService {
                   "Version" : "2012-10-17"
                 }
                 """.formatted(bucketName);
-    }
-
-    private String getDistinctFileName(MultipartFile file) {
-        return new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
-    }
-
-    private String getObjectUrl(String filename) {
-        return minioProperties.getEndpoint() + "/" + minioProperties.getBucketName() + "/" + filename;
     }
 }

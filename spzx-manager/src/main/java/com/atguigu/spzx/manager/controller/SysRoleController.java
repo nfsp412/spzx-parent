@@ -4,8 +4,12 @@ import com.atguigu.spzx.common.login.LoginUser;
 import com.atguigu.spzx.common.login.LoginUserHolder;
 import com.atguigu.spzx.common.result.Result;
 import com.atguigu.spzx.manager.service.SysRoleService;
-import com.atguigu.spzx.model.dto.system.SysRoleDto;
-import com.atguigu.spzx.model.entity.system.SysRole;
+import com.atguigu.spzx.model.dto.AssignMenuDto;
+import com.atguigu.spzx.model.dto.AssignRoleDto;
+import com.atguigu.spzx.model.dto.SysRoleDto;
+
+import com.atguigu.spzx.model.entity.SysRole;
+import com.atguigu.spzx.model.entity.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,50 +21,56 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/system/sysRole")
-@Tag(name = "角色相关接口")
 public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
-    @PostMapping("/findByPage/{current}/{size}")
-    @Operation(summary = "分页获取角色明细")
-    public Result<IPage<SysRole>> findByPage(@PathVariable("current") Integer current,
-                                             @PathVariable("size") Integer size,
-                                             @RequestBody SysRoleDto sysRoleDto) {
-        System.out.println(sysRoleDto);
-
+    @GetMapping("/findByPage/{current}/{size}")
+    public Result<Page<SysRole>> findByPage(
+            @PathVariable("current") Integer current,
+            @PathVariable("size") Integer size,
+            @RequestParam(value = "roleName", required = false) String roleName
+    ) {
         Page<SysRole> page = new Page<>(current, size);
-        IPage<SysRole> sysRoleIPage = sysRoleService.getSysRolePage(page,sysRoleDto);
-        return Result.ok(sysRoleIPage);
+        Page<SysRole> sysRolePage = sysRoleService.findByPage(page, roleName);
+        return Result.ok(sysRolePage);
     }
 
-    @PostMapping("/saveSysRole")
-    @Operation(summary = "添加角色信息接口")
-    public Result saveSysRole(@RequestBody SysRole sysRole) {
-        System.out.println("=========================="+sysRole);
-        sysRoleService.save(sysRole);
+//    @PostMapping("/saveSysRole")
+//    public Result saveSysRole(@RequestBody SysRole sysRole) {
+//        sysRoleService.saveSysRole(sysRole);
+//        return Result.ok(null);
+//    }
+
+    @DeleteMapping("/deleteById/{id}")
+    public Result deleteById(@PathVariable("id") Integer id) {
+        sysRoleService.deleteById(id);
         return Result.ok(null);
     }
 
-    @PutMapping("/updateSysRole")
-    @Operation(summary = "修改角色信息接口")
-    public Result updateSysRole(@RequestBody SysRole sysRole){
-        System.out.println(sysRole);
-        sysRoleService.updateById(sysRole);
+    @PostMapping("/saveOrUpdateById")
+    public Result saveOrUpdateById(@RequestBody SysRole sysRole) {
+
+        sysRoleService.saveOrUpdateById(sysRole);
         return Result.ok(null);
     }
 
-    @DeleteMapping("/deleteById/{roleId}")
-    @Operation(summary = "删除角色信息接口")
-    public Result deleteById(@PathVariable("roleId") Integer id){
-        sysRoleService.removeById(id);
-        return Result.ok(null);
-    }
-
-    @GetMapping("/findAllRoles/{userId}")
-    @Operation(summary = "根据用户id获取所有角色接口")
-    public Result<Map<String, Object>> findAllRoles(@PathVariable("userId") Integer id) {
-        Map<String, Object> map = sysRoleService.findAllRoles(id);
+    /**
+     * Map封装两个kv
+     * "allRolesList" => List<SysRole>
+     *
+     * @return
+     */
+    @GetMapping("/findAllRoles/{id}")
+    public Result<Map<String, Object>> findAllRoles(@PathVariable("id") Long userId) {
+        Map<String, Object> map = sysRoleService.findAllRoles(userId);
         return Result.ok(map);
+    }
+
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssignMenuDto assignMenuDto ) {
+        System.out.println("=========================>"+assignMenuDto);
+        sysRoleService.doAssign(assignMenuDto);
+        return Result.ok(null);
     }
 }

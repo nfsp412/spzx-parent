@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.spzx.model.entity.Product">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="brandId" column="brand_id" jdbcType="BIGINT"/>
+        <result property="category1Id" column="category1_id" jdbcType="BIGINT"/>
+        <result property="category2Id" column="category2_id" jdbcType="BIGINT"/>
+        <result property="category3Id" column="category3_id" jdbcType="BIGINT"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
+        <result property="sliderUrls" column="slider_urls" jdbcType="VARCHAR"/>
+        <result property="specValue" column="spec_value" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="auditStatus" column="audit_status" jdbcType="TINYINT"/>
+        <result property="auditMessage" column="audit_message" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,brand_id,
+        category1_id,category2_id,category3_id,
+        unit_name,slider_urls,spec_value,
+        status,audit_status,audit_message,
+        create_time,update_time,is_deleted
+    </sql>
+
+    <sql id="selectSql">
+        select t1.id,
+               t1.name,
+               t1.brand_id,
+               t1.category1_id,
+               t1.category2_id,
+               t1.category3_id,
+               t1.unit_name,
+               t1.slider_urls,
+               t1.spec_value,
+               t1.status,
+               t1.audit_status,
+               t1.audit_message,
+               t1.create_time,
+               t1.update_time,
+               t1.is_deleted,
+               t2.name as brandName,
+               t3.name as category1Name,
+               t4.name as category2Name,
+               t5.name as category3Name
+        from db_spzx.product t1
+                 left join db_spzx.brand t2
+                           on t1.brand_id = t2.id
+                               and t2.is_deleted = 0
+                 left join db_spzx.category t3
+                           on t1.category1_id = t3.id
+                               and t3.is_deleted = 0
+                 left join db_spzx.category t4
+                           on t1.category2_id = t4.id
+                               and t4.is_deleted = 0
+                 left join db_spzx.category t5
+                           on t1.category3_id = t5.id
+                               and t5.is_deleted = 0
+    </sql>
+
+    <!--    Page<ProductVo> getProductPage(Page<ProductVo> productPage, ProductDto productDto);-->
+    <select id="getProductPage" resultType="com.atguigu.spzx.model.vo.ProductVo">
+        <include refid="selectSql"/>
+        <where>
+            t1.is_deleted = 0
+            <if test="productDto.brandId != null and productDto.brandId != '' ">
+                and t1.brand_id = #{productDto.brandId}
+            </if>
+            <if test="productDto.category1Id != null and productDto.category1Id != '' ">
+                and t1.category1_id = #{productDto.category1Id}
+            </if>
+            <if test="productDto.category2Id != null and productDto.category2Id != '' ">
+                and t1.category2_id = #{productDto.category2Id}
+            </if>
+            <if test="productDto.category3Id != null and productDto.category3Id != '' ">
+                and t1.category3_id = #{productDto.category3Id}
+            </if>
+        </where>
+
+    </select>
+
+    <!--    ProductVo getProductById(Integer id);-->
+    <select id="getProductById" resultType="com.atguigu.spzx.model.vo.ProductVo">
+        <include refid="selectSql"/>
+        where t1.is_deleted = 0
+        and t1.id = #{id}
+    </select>
+</mapper>

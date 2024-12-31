@@ -1,12 +1,7 @@
 package com.atguigu.spzx.manager.service;
 
-import com.atguigu.spzx.model.dto.system.LoginDto;
-import com.atguigu.spzx.model.vo.system.LoginVo;
-import com.atguigu.spzx.model.vo.system.ValidateCodeVo;
+import com.atguigu.spzx.model.vo.ValidateCodeVo;
 
 public interface LoginService {
-    LoginVo login(LoginDto loginDto);
-
-
     ValidateCodeVo generateValidateCode();
 }

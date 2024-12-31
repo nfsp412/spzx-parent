@@ -2,7 +2,7 @@ package com.atguigu.spzx.common.result;
 
 import lombok.Getter;
 
-@Getter // 提供获取属性值的getter方法
+@Getter
 public enum ResultCodeEnum {
 
     SUCCESS(200, "成功"),

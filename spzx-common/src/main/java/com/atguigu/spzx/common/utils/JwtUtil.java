@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class JwtUtil {
     private static final long tokenExpiration = 60 * 60 * 1000L * 24;
+//    private static final long tokenExpiration = 60 * 1000L;
     private static final SecretKey tokenSignKey = Keys.hmacShaKeyFor("M0PKKI6pYGVWWfDZw90a0lTpGYX1d4AQ".getBytes());
 
     public static String createToken(Long userId, String username) {
@@ -40,6 +41,5 @@ public class JwtUtil {
 
     public static void main(String[] args) {
         System.out.println(createToken(1L, "zs"));
-
     }
 }

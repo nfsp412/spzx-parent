@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.CategoryBrandMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.spzx.model.entity.CategoryBrand">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="brandId" column="brand_id" jdbcType="BIGINT"/>
+        <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,brand_id,category_id,
+        create_time,update_time,is_deleted
+    </sql>
+
+<!--    Page<CategoryBrandVo> findAllPage(Page<CategoryBrandVo> page, CategoryBrandDto categoryBrandDto);-->
+    <select id="findAllPage" resultType="com.atguigu.spzx.model.vo.CategoryBrandVo">
+        select
+            t1.id,
+            t1.brand_id,
+            t1.category_id,
+            t1.create_time,
+            t2.name as categoryName,
+            t3.name as brandName,
+            t3.logo
+        from db_spzx.category_brand t1
+        left join db_spzx.category t2
+        on t1.category_id = t2.id
+        and t2.is_deleted = 0
+        left join db_spzx.brand t3
+        on t1.brand_id = t3.id
+        and t3.is_deleted = 0
+        <where>
+            t1.is_deleted = 0
+            <if test="categoryBrandDto.brandId != null and categoryBrandDto.brandId != '' ">
+                and t1.brand_id = #{categoryBrandDto.brandId}
+            </if>
+            <if test="categoryBrandDto.categoryId != null and categoryBrandDto.categoryId != '' ">
+                and t1.category_id = #{categoryBrandDto.categoryId}
+            </if>
+        </where>
+    </select>
+
+<!--    List<Brand> findBrandByCategoryId(Integer category3Id);-->
+    <select id="findBrandByCategoryId" resultType="com.atguigu.spzx.model.entity.Brand">
+        select t2.id,
+               t2.name,
+               t2.logo,
+               t2.create_time,
+               t2.update_time,
+               t2.is_deleted
+        from db_spzx.category_brand t1
+                 left join db_spzx.brand t2
+                           on t1.brand_id = t2.id
+                               and t2.is_deleted = 0
+        where t1.is_deleted = 0
+          and t1.category_id = #{category3Id}
+    </select>
+</mapper>
