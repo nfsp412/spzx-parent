@@ -1,10 +1,7 @@
 package com.atguigu.spzx.manager.service;
 
 import com.atguigu.spzx.model.entity.SysMenu;
-import com.atguigu.spzx.model.vo.DynamicMenusVo;
 import com.atguigu.spzx.model.vo.SysMenuVo;
-import com.atguigu.spzx.model.vo.SysMenuVo1;
-import com.atguigu.spzx.model.vo.SysMenuVo2;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -17,9 +14,8 @@ import java.util.Map;
  */
 public interface SysMenuService extends IService<SysMenu> {
 
-//    List<SysMenuVo> findNodes();
 
-    List<SysMenuVo1> findNodes();
+    List<SysMenuVo> findNodes();
 
     void saveSysMenu(SysMenu sysMenu);
 
@@ -29,7 +25,8 @@ public interface SysMenuService extends IService<SysMenu> {
 
     Map<String, Object> findAllMenus(Long roleId);
 
-    List<DynamicMenusVo> findDynamicMenus();
 
-    List<SysMenuVo2> findUserMenuList();
+    List<SysMenuVo> menus();
+
+
 }

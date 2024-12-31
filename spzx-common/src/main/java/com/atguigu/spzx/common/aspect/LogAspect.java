@@ -3,12 +3,16 @@ package com.atguigu.spzx.common.aspect;
 import com.atguigu.spzx.common.anno.Log;
 import com.atguigu.spzx.common.utils.LogUtil;
 import com.atguigu.spzx.model.entity.SysOperLog;
-import com.atguigu.spzx.service.AsyncOperatorLogService;
+import com.atguigu.spzx.common.service.AsyncOperatorLogService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 @Aspect

@@ -1,11 +1,8 @@
 package com.atguigu.spzx.manager.service.impl;
 
 import com.atguigu.spzx.manager.mapper.AsyncOperatorLogMapper;
-import com.atguigu.spzx.manager.mapper.BrandMapper;
-import com.atguigu.spzx.manager.service.BrandService;
-import com.atguigu.spzx.model.entity.Brand;
 import com.atguigu.spzx.model.entity.SysOperLog;
-import com.atguigu.spzx.service.AsyncOperatorLogService;
+import com.atguigu.spzx.common.service.AsyncOperatorLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Async;

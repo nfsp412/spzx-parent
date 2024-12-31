@@ -62,40 +62,10 @@ public class IndexController {
 
     @GetMapping("/menus")
     @Operation(summary = "menus")
-    public Result<List<DynamicMenusVo>> menus() {
-        List<DynamicMenusVo> list = sysMenuService.findDynamicMenus();
-
-//        DynamicMenusVo s1 = new DynamicMenusVo();
-//        s1.setName("system");
-//        s1.setTitle("系统管理");
-//        s1.setChildren(null);
-//
-//        DynamicMenusVo s2 = new DynamicMenusVo();
-//        s2.setName("base");
-//        s2.setTitle("基础数据管理");
-//
-//        ArrayList<DynamicMenusVo> temp = new ArrayList<>();
-//        DynamicMenusVo ss2 = new DynamicMenusVo();
-//        ss2.setTitle("地区管理");
-//        ss2.setName("region");
-//        temp.add(ss2);
-//        s2.setChildren(temp);
-//
-//        ArrayList<DynamicMenusVo> list = new ArrayList<>();
-//        list.add(s1);
-//        list.add(s2);
-
-//        System.out.println(list);
+    public Result<List<SysMenuVo>> menus() {
+        List<SysMenuVo> list = sysMenuService.menus();
 
         return Result.ok(list);
     }
 
-    // com.atguigu.spzx.system.controller#IndexController
-//    @GetMapping("/menus")
-//    @Operation(summary = "menus")
-//    public Result menus() {
-//        List<SysMenuVo2> sysMenuVoList =  sysMenuService.findUserMenuList() ;
-//        System.out.println(sysMenuVoList);
-//        return Result.build(sysMenuVoList , ResultCodeEnum.SUCCESS) ;
-//    }
 }

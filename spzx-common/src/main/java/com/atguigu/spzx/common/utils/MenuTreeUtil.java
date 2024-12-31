@@ -2,7 +2,7 @@ package com.atguigu.spzx.common.utils;
 
 
 import com.atguigu.spzx.model.entity.SysMenu;
-import com.atguigu.spzx.model.vo.BaseVo;
+
 import com.atguigu.spzx.model.vo.SysMenuVo;
 
 import java.util.ArrayList;
