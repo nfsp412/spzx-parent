@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.product.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.spzx.model.entity.Product">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="brandId" column="brand_id" jdbcType="BIGINT"/>
+        <result property="category1Id" column="category1_id" jdbcType="BIGINT"/>
+        <result property="category2Id" column="category2_id" jdbcType="BIGINT"/>
+        <result property="category3Id" column="category3_id" jdbcType="BIGINT"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
+        <result property="sliderUrls" column="slider_urls" jdbcType="VARCHAR"/>
+        <result property="specValue" column="spec_value" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="auditStatus" column="audit_status" jdbcType="TINYINT"/>
+        <result property="auditMessage" column="audit_message" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,brand_id,
+        category1_id,category2_id,category3_id,
+        unit_name,slider_urls,spec_value,
+        status,audit_status,audit_message,
+        create_time,update_time,is_deleted
+    </sql>
+
+    <!--    List<ProductSku> findProductSkuList();-->
+    <select id="findProductSkuList" resultType="com.atguigu.spzx.model.entity.ProductSku">
+        select t1.*
+        from db_spzx.product_sku t1
+                 inner join db_spzx.product t2
+                            on t1.product_id = t2.id
+                                and t2.is_deleted = 0
+                                and t2.status = 1
+                                and t1.is_deleted = 0
+        order by sale_num desc
+        limit 10
+    </select>
+
+</mapper>
