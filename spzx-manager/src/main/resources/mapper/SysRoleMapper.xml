@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.spzx.model.entity.SysRole">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,role_name,role_code,
+        description,create_time,update_time,
+        is_deleted
+    </sql>
+
+    <!--    Page<SysRole> findByPage(Page<SysRole> page, String roleName);-->
+    <select id="findByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from db_spzx.sys_role
+        <where>
+            is_deleted = 0
+            <if test="roleName != null and roleName != '' ">
+                and role_name like concat('%', #{roleName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!--    List<Long> findSysUserRoleIdsByUserId(Long userId);-->
+    <select id="findSysUserRoleIdsByUserId" resultType="Long">
+        select role_id
+        from db_spzx.sys_user_role
+        where is_deleted = 0
+          and user_id = #{userId}
+    </select>
+
+    <!--    void deleteSysRoleMenuByRoleId(Long roleId);-->
+    <delete id="deleteSysRoleMenuByRoleId">
+        update db_spzx.sys_role_menu
+        set is_deleted = 1
+        where is_deleted = 0
+          and role_id = #{roleId}
+    </delete>
+
+    <!--    void doAssign(Long roleId, List<Map<String, Number>> menuIdList);-->
+    <insert id="doAssign">
+        insert into db_spzx.sys_role_menu
+        (role_id, menu_id, is_half)
+        values
+        <foreach collection="menuIdList" item="item" separator=",">
+            (#{roleId}, #{item.id}, #{item.isHalf})
+        </foreach>
+    </insert>
+</mapper>

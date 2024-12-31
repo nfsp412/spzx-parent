@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.PaymentInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.spzx.model.entity.PaymentInfo">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <result property="payType" column="pay_type" jdbcType="TINYINT"/>
+        <result property="outTradeNo" column="out_trade_no" jdbcType="VARCHAR"/>
+        <result property="amount" column="amount" jdbcType="DECIMAL"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="paymentStatus" column="payment_status" jdbcType="CHAR"/>
+        <result property="callbackTime" column="callback_time" jdbcType="TIMESTAMP"/>
+        <result property="callbackContent" column="callback_content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,order_no,
+        pay_type,out_trade_no,amount,
+        content,payment_status,callback_time,
+        callback_content,create_time,update_time,
+        is_deleted
+    </sql>
+</mapper>
